@@ -13,7 +13,12 @@
   <body>
     <a href="/">Bulletin Board</a>
     <hr>
-    
+
+  <!--These helper methods were automatically created by the resource generator in the controller file. To choose which errors actually trigger the notice and alert, I must write the instances of the validate() method in the post.rb model file for each field I care about-->
+    <%= notice %>
+    <%= alert %> 
+
+
     <%= yield %>
   </body>
 </html>
