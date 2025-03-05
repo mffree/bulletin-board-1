@@ -52,6 +52,8 @@
 
 <!--Table of all active posts-->
 
+<h2>Active posts</h2>
+
 <div>
   <div>
     <table border="1">
@@ -90,7 +92,94 @@
 
       <% matching_posts = Post.where({ :board_id => @the_board.id }).order({ :expires_on => :asc })%>
 
-      <% matching_posts.each do |a_post| %>
+      <% active_posts = matching_posts.where("expires_on >= ?", Date.today) %>
+
+      <% active_posts.each do |a_post| %>
+      <tr>
+        <td>
+          <%= a_post.id %>
+        </td>
+
+        <td>
+          <%= a_post.title %>
+        </td>
+
+        <td>
+          <%= a_post.body %>
+        </td>
+
+        <td>
+          <%= a_post.expires_on.strftime("%b %e, %Y") %>
+        </td>
+
+        <td>
+          <%= a_post.board_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_post.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_post.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/posts/<%= a_post.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+
+<!--Table of all expired posts-->
+
+<h2>Expired posts</h2>
+
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Title
+        </th>
+
+        <th>
+          Body
+        </th>
+
+        <th>
+          Expires on
+        </th>
+
+        <th>
+          Board
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <%# matching_posts = Post.where({ :board_id => @the_board.id }).order({ :expires_on => :asc })%>
+<!---->
+      <% expired_posts = matching_posts.where("expires_on < ?", Date.today) %>
+
+      <% expired_posts.each do |a_post| %>
       <tr>
         <td>
           <%= a_post.id %>
